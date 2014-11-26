@@ -1,8 +1,14 @@
+var app = null;
+
 Ext.define('CustomApp', {
     extend: 'Rally.app.App',
+    uses: [
+        'Ext.ux.exporter.Exporter'
+    ],
     componentCls: 'app',
     //items:{ html:'<a href="https://help.rallydev.com/apps/2.0rc3/doc/">App SDK 2.0rc3 Docs</a>'},
     launch: function() {
+        app = this;
         this._myModels = [];
         
         this._boxcontainer = Ext.create('Ext.form.Panel', {
@@ -26,6 +32,21 @@ Ext.define('CustomApp', {
             }]
         });
         
+        this._myButton = this.add({
+            xtype : 'rallybutton',
+            text : 'Export this grid!',
+            listeners : {
+                scope :this,
+
+                click : function() {
+                    var exporter = Ext.create("GridExporter",{});
+                    console.log("clicked",exporter);
+                    exporter.exportGrid(app._myGrid);
+                }
+            }
+        });
+
+
         this.add(this._boxcontainer);
         
         var filter = '';
@@ -35,7 +56,9 @@ Ext.define('CustomApp', {
         if( timeboxScope ) {
             filter = (timeboxScope.getQueryFilter());
         }
-        
+
+       
+
         this._myGrid = this.add({
             xtype: 'rallygrid',
             enableBulkEdit: true,
@@ -51,6 +74,7 @@ Ext.define('CustomApp', {
                 filters: [filter]
             }
         });
+
     },
     
     _onCheck: function(obj, value) {
