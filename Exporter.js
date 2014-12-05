@@ -4,10 +4,8 @@ Ext.define("GridExporter", {
     exportGrid: function(grid) {
         if (Ext.isIE) {
             this._ieToExcel(grid);
-
         } else {
             var data = this._getCSV(grid);
-
             window.location = 'data:text/csv;charset=utf8,' + encodeURIComponent(data);
         }
     },
@@ -17,7 +15,7 @@ Ext.define("GridExporter", {
             if (!string.match(/"/)) {
                 string = '"' + string + '"';
             } else {
-                string = string.replace(/,/g, ''); // comma's and quotes-- sorry, just loose the commas
+                string = string.replace(/,/g, ''); // comma's and quotes-- sorry, just lose the commas
             }
         }
         return string;
@@ -26,9 +24,9 @@ Ext.define("GridExporter", {
     _getFieldText: function(fieldData) {
         var text;
 
-        if (fieldData == null || fieldData == undefined) {
+        if (fieldData === null || fieldData === undefined) {
             text = '';
-
+            
         } else if (fieldData._refObjectName && !fieldData.getMonth) {
             text = fieldData._refObjectName;
 
@@ -47,7 +45,6 @@ Ext.define("GridExporter", {
 
     _getFieldTextAndEscape: function(fieldData) {
         var string  = this._getFieldText(fieldData);
-
         return this._escapeForCSV(string);
     },
 
@@ -58,7 +55,7 @@ Ext.define("GridExporter", {
 
         var that = this;
         Ext.Array.each(cols, function(col, index) {
-            if (col.hidden != true) {
+            if (col.hidden !== true) {
                 data += that._getFieldTextAndEscape(col.text) + ',';
             }
         });
@@ -67,7 +64,7 @@ Ext.define("GridExporter", {
         store.each(function(record) {
             var entry       = record.getData();
             Ext.Array.each(cols, function(col, index) {
-                if (col.hidden != true) {
+                if (col.hidden !== true) {
                     var fieldName   = col.dataIndex;
                     var text        = entry[fieldName];
 
@@ -86,7 +83,7 @@ Ext.define("GridExporter", {
         var cols            = grid.columns;
 
         Ext.Array.each(cols, function(col, colIndex) {
-            if (col.hidden != true) {
+            if (col.hidden !== true) {
                 console.log('header: ', col.text);
                 sheet.cells(1,colIndex + 1).value = col.text;
             }
@@ -97,7 +94,7 @@ Ext.define("GridExporter", {
             var entry   = record.getData();
 
             Ext.Array.each(cols, function(col, colIndex) {
-                if (col.hidden != true) {
+                if (col.hidden !== true) {
                     var fieldName   = col.dataIndex;
                     var text        = entry[fieldName];
                     var value       = that._getFieldText(text);
@@ -120,12 +117,12 @@ Ext.define("GridExporter", {
                 return;
             }
 
-            xlBook.worksheets("Sheet1").activate;
+            xlBook.worksheets("Sheet1").activate();
             var XlSheet = xlBook.activeSheet;
             xlApp.visible = true; 
 
            this._ieGetGridData(grid, XlSheet);
-           XlSheet.columns.autofit; 
+           XlSheet.columns.autofit(); 
         }
     }
 });
