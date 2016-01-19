@@ -8,7 +8,8 @@ containing page, it will respect that as well.
 Caution: Features will not show up if the Iteration timebox is on the page
 
 ## Screen Shot
-![Multi-item Grid](https://github.com/sficarrotta/WSJF_Grid/blob/master/MultiItemGrid.png)
+![Multi-item Grid](https://github.com/sficarrotta/Multi-item-grid/blob/master/MultiItemGrid.png)
+
 
 ## License
 
